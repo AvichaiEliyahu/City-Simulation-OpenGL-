@@ -2,7 +2,7 @@
 #include "glut.h"
 #include "JunctionManager.h"
 #pragma warning (disable:4996)
-
+// avichai
 JunctionManager manager;
 
 void init()
