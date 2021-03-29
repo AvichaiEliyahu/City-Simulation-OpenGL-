@@ -32,7 +32,11 @@ void JunctionManager::initJunctions() {
 
 void JunctionManager::readLightsTimes()
 {
-	FILE* timesFile = fopen(TIMESFILENAME, "r");
+	FILE* timesFile = fopen("C://Users//aviha//Desktop//final project//new//vs2017test//times.txt", "r");
+	if (!timesFile) {
+		printf("\nerror opening times file!\n");
+		return;
+	}
 	int road0, road1, road2, road3;
 	int counter = 0;
 	for (int i = 1; i < LENGTH-1; i++) {
@@ -87,7 +91,11 @@ void JunctionManager::initCarsAndMatchRoads() {
 }
 
 void JunctionManager::putCarsOnRoads() {
-	FILE* infoFile = fopen(INFOFILENAME, "r");
+	FILE* infoFile = fopen("C://Users//aviha//Desktop//final project//new//vs2017test//info.txt", "r");
+	if (!infoFile) {
+		printf("\nerror opening info file!\n");
+		return;
+	}
 	int i;
 	int roadArrayX, roadArrayY, roadArrayZ;
 	int targetX, targetY;
