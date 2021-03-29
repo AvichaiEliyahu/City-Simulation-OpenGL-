@@ -31,6 +31,7 @@ public:
 	void move(Junction* junction);
 	bool checkIfCarCanLeave(Junction* current);
 	void drawAll();
+	void writeFramesToFile(int frames);
 	// a function taht moves on all junctions and checks where the first car in the green light need to leave
 	void moveAll();
 };

@@ -175,6 +175,16 @@ void JunctionManager::roadsCheck()
 	printf("\n%d",roads[3][4][0].getNumOfCars());
 }
 
+void JunctionManager::writeFramesToFile(int frames) {
+	FILE* timesFile = fopen("C://Users//aviha//Desktop//final project//new//vs2017test//times.txt", "a");
+	if (!timesFile) {
+		printf("\nerror opening times file!\n");
+		return;
+	}
+	fprintf(timesFile,"%d",frames);
+	fclose(timesFile);
+}
+
 void JunctionManager::generalCheck()
 {
 	for (Car c : cars)
@@ -186,6 +196,7 @@ bool JunctionManager::finish()
 {
 	if (carsCounter == 0) {
 		printf("\nframes: %d\n",framesRestarts*MAX_NUM_OF_FRAMES+frames);
+		writeFramesToFile(framesRestarts * MAX_NUM_OF_FRAMES + frames);
 		return true;
 	}
 	return false;
