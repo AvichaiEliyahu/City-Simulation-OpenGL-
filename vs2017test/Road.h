@@ -24,7 +24,7 @@ public:
 	directions getDirection();
 
 	Car* removeFromTop();
-	bool addToEnd(Car* car);
+	bool addToEnd(Car* car, bool initial);
 	bool addToEndWithoutAnim(Car* car);
 	void refreshCarsPositions();
 	void endAnimation();

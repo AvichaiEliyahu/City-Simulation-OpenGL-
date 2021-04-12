@@ -8,6 +8,7 @@ private:
 	Pair junction;
 	int carID;
 	bool exist = false;
+	bool isStuck = false;
 	bool isMoving=false;
 	vector<Pair> path; //every pair marks next junction
 	Pair finalTarget;
@@ -17,6 +18,10 @@ private:
 public:
 	void setIsMoving(bool moving);
 	bool getIsMoving();
+
+	void setStuck(bool stuck);
+	bool getStuck();
+	bool changeStuck();
 
 	void setCurrent(double x, double y);
 	Point getCurrent();

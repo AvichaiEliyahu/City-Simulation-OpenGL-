@@ -11,6 +11,7 @@ private:
 	int frames = 0;
 	int framesRestarts = 0;
 	int carsCounter = 0;
+	int stuck = 0;
 	Junction junctions[LENGTH][LENGTH];
 	Road roads[LENGTH][LENGTH][4];
 	Car cars[NUM_OF_CARS];
@@ -27,11 +28,12 @@ public:
 	void JunctionsCheck();
 	void roadsCheck();
 	void generalCheck();
+	bool deadlockCheck();
 	bool finish();
 	void move(Junction* junction);
 	bool checkIfCarCanLeave(Junction* current);
 	void drawAll();
-	void writeFramesToFile(int frames);
+	void writeToFile(int frames);
 	// a function taht moves on all junctions and checks where the first car in the green light need to leave
 	void moveAll();
 };

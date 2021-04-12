@@ -43,9 +43,10 @@ Car* Road::removeFromTop()
 
 
 
-bool Road::addToEnd(Car* car)
-{
-	if (cars.size() < MAX_CARS_PER_ROAD) {
+bool Road::addToEnd(Car* car, bool initial)
+{	
+	int max = initial ? int(MAX_CARS_PER_ROAD*0.66) : MAX_CARS_PER_ROAD;
+	if (cars.size() < max) {
 		cars.push_back(car);
 		car->setJunction({position.row, position.col});
 		//endAnimation();

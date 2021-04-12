@@ -103,7 +103,7 @@ void JunctionManager::putCarsOnRoads() {
 	for (i = 0; i < NUM_OF_CARS; i++) {
 		fscanf(infoFile, "%d %d %d %d %d",
 			&roadArrayX, &roadArrayY, &roadArrayZ, &targetX, &targetY);
-		if (roads[roadArrayX][roadArrayY][roadArrayZ].addToEnd(&cars[i])) {
+		if (roads[roadArrayX][roadArrayY][roadArrayZ].addToEnd(&cars[i], true)) {
 			cars[i].setExist(true);
 			cars[i].setColor(BLACK);
 			Pair currentJunc, target;
@@ -175,13 +175,13 @@ void JunctionManager::roadsCheck()
 	printf("\n%d",roads[3][4][0].getNumOfCars());
 }
 
-void JunctionManager::writeFramesToFile(int frames) {
+void JunctionManager::writeToFile(int stuckCars) {
 	FILE* timesFile = fopen("C://Users//aviha//Desktop//final project//new//vs2017test//times.txt", "a");
 	if (!timesFile) {
 		printf("\nerror opening times file!\n");
 		return;
 	}
-	fprintf(timesFile,"%d",frames);
+	fprintf(timesFile,"%d", stuckCars);
 	fclose(timesFile);
 }
 
@@ -192,11 +192,23 @@ void JunctionManager::generalCheck()
 			c.showPath();
 }
 
+bool JunctionManager::deadlockCheck() {
+	for (int i = 1; i < LENGTH - 1; i++)
+		for (int j = 1; j < LENGTH - 1; j++)
+			for (int k = 0; k < 4; k++) 
+				if (junctions[i][j].getInRoads()[k]->getFirstCar()!=NULL)
+					if (junctions[i][j].getInRoads()[k]->getFirstCar()->getStuck() == false)
+						return false;
+	return true;
+
+
+}
+
 bool JunctionManager::finish()
 {
 	if (carsCounter == 0) {
-		printf("\nframes: %d\n",framesRestarts*MAX_NUM_OF_FRAMES+frames);
-		writeFramesToFile(framesRestarts * MAX_NUM_OF_FRAMES + frames);
+		printf("\stuck: %d\n",stuck);
+		writeToFile(stuck);
 		return true;
 	}
 	return false;
@@ -210,19 +222,13 @@ void JunctionManager::move(Junction* junction)
 	firstCarInGreenLight->setColor(BLACK);
 	from = junction->getPosition();
 	to = firstCarInGreenLight->getNextJunction();
-	/*printf("\n=======================\n");
-	firstCarInGreenLight->showPath();
-	printf("\ncurrent: (%d, %d) -> next: (%d %d)\n",
-		firstCarInGreenLight->getJunction(), firstCarInGreenLight->getNextJunction());
-	printf("\n=======================\n");*/
+	
 	if (from.row == to.row)
 		roadToGo = (junctions[to.row][to.col].getInRoads()[from.col > to.col ? RIGHT : LEFT]);
 	if (from.col == to.col)
 		roadToGo = (junctions[to.row][to.col].getInRoads()[from.row > to.row ? UP : DOWN]);
-	//firstCarInGreenLight->setColor(BLUE);
 	
-	roadToGo->addToEnd(junction->getGreenRoad()->removeFromTop());
-//	firstCarInGreenLight->setIsMoving(false);
+	roadToGo->addToEnd(junction->getGreenRoad()->removeFromTop(),false);
 	firstCarInGreenLight->removeTopJunctionFromPath();
 	carsCounter -= roadToGo->checkCarsArrival();
 }
@@ -262,13 +268,26 @@ void JunctionManager::drawAll() {
 void JunctionManager::moveAll() {
 	for (int i = 1; i < LENGTH-1; i++) {
 		for (int j = 1; j < LENGTH-1; j++) {
-			if (junctions[i][j].getFirstCarInGreenLight())
-				if (checkIfCarCanLeave(&junctions[i][j]))
+			if (junctions[i][j].getFirstCarInGreenLight()) {
+				if (checkIfCarCanLeave(&junctions[i][j])) {
+					junctions[i][j].getFirstCarInGreenLight()->setStuck(false);
 					move(&junctions[i][j]);
-				else junctions[i][j].getFirstCarInGreenLight()->setColor(RED);
+				}
+				else
+				{
+					junctions[i][j].getFirstCarInGreenLight()->setColor(RED);
+					if (junctions[i][j].getFirstCarInGreenLight()->changeStuck())
+						stuck++;
+					if (deadlockCheck()) {
+						writeToFile(-1);
+						Sleep(3000);
+						exit(0);
+					}
+				}
+			}
 			if (frames % junctions[i][j].getTimeIntervals()[junctions[i][j].getGreenRoadNum()] == 0)
 				junctions[i][j].setNextGreenRoad();
-			if (frames > 10000) {
+			if (frames > MAX_NUM_OF_FRAMES) {
 				framesRestarts++;
 				frames = 0;
 			}
@@ -278,5 +297,3 @@ void JunctionManager::moveAll() {
 	}
 	frames++;
 }
-
-

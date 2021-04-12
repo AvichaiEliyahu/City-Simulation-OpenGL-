@@ -9,6 +9,22 @@ bool Car::getIsMoving()
 {
 	return isMoving;
 }
+void Car::setStuck(bool stuck) {
+	isStuck = stuck;
+}
+
+bool Car::getStuck()
+{
+	return isStuck;
+}
+
+bool Car::changeStuck() {
+	if (isStuck == false) {
+		isStuck = true;
+		return true;
+	}
+	return false;
+}
 
 void Car::setCurrent(double x, double y)
 {
