@@ -1,8 +1,6 @@
 #pragma once
 #include "Junction.h"
 #include "glut.h"
-#define INFOFILENAME "info.txt"
-#define TIMESFILENAME "times.txt"
 #pragma warning (disable:4996)
 
 class JunctionManager

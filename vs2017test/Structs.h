@@ -1,4 +1,6 @@
 #pragma once
+#define TIMES_FILENAME "times.txt"
+#define INFO_FILENAME "info.txt"
 #define MAX_NUM_OF_FRAMES 10000
 #define CAR_SIZE 3
 #define NUM_OF_DIRECTIONS 4
@@ -16,7 +18,7 @@
 #define NUM_OF_JUNCTIONS LENGTH * LENGTH
 #define NUM_OF_ROADS NUM_OF_JUNCTIONS * 4
 #define MAX_CARS_PER_ROAD 12
-#define NUM_OF_CARS LENGTH*20
+#define NUM_OF_CARS 150
 #define FRAME_PER_CAR 1000
 //#define NUM_OF_CARS 3
 

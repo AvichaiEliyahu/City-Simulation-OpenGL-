@@ -32,7 +32,7 @@ void JunctionManager::initJunctions() {
 
 void JunctionManager::readLightsTimes()
 {
-	FILE* timesFile = fopen("C://Users//aviha//Desktop//final project//new//vs2017test//times.txt", "r");
+	FILE* timesFile = fopen(TIMES_FILENAME, "r");
 	if (!timesFile) {
 		printf("\nerror opening times file!\n");
 		return;
@@ -91,7 +91,7 @@ void JunctionManager::initCarsAndMatchRoads() {
 }
 
 void JunctionManager::putCarsOnRoads() {
-	FILE* infoFile = fopen("C://Users//aviha//Desktop//final project//new//vs2017test//info.txt", "r");
+	FILE* infoFile = fopen(INFO_FILENAME, "r");
 	if (!infoFile) {
 		printf("\nerror opening info file!\n");
 		return;
@@ -176,7 +176,7 @@ void JunctionManager::roadsCheck()
 }
 
 void JunctionManager::writeToFile(int stuckCars) {
-	FILE* timesFile = fopen("C://Users//aviha//Desktop//final project//new//vs2017test//times.txt", "a");
+	FILE* timesFile = fopen(TIMES_FILENAME, "a");
 	if (!timesFile) {
 		printf("\nerror opening times file!\n");
 		return;
@@ -271,7 +271,11 @@ void JunctionManager::moveAll() {
 			if (junctions[i][j].getFirstCarInGreenLight()) {
 				if (checkIfCarCanLeave(&junctions[i][j])) {
 					junctions[i][j].getFirstCarInGreenLight()->setStuck(false);
-					move(&junctions[i][j]);
+					if (junctions[i][j].getGreenRoad()->getCurrentFrames() < junctions[i][j].getTimeIntervals()[junctions[i][j].getGreenRoadNum()]) {
+						move(&junctions[i][j]);
+						junctions[i][j].getGreenRoad()->setCurrentFrames(junctions[i][j].getGreenRoad()->getCurrentFrames() + FRAME_PER_CAR);
+					}
+					
 				}
 				else
 				{
@@ -280,13 +284,15 @@ void JunctionManager::moveAll() {
 						stuck++;
 					if (deadlockCheck()) {
 						writeToFile(-1);
-						Sleep(3000);
+						//Sleep(3000);
 						exit(0);
 					}
 				}
 			}
-			if (frames % junctions[i][j].getTimeIntervals()[junctions[i][j].getGreenRoadNum()] == 0)
+			if (frames % junctions[i][j].getTimeIntervals()[junctions[i][j].getGreenRoadNum()] == 0) {
 				junctions[i][j].setNextGreenRoad();
+				junctions[i][j].getGreenRoad()->setCurrentFrames(0);
+			}
 			if (frames > MAX_NUM_OF_FRAMES) {
 				framesRestarts++;
 				frames = 0;

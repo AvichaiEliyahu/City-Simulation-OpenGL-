@@ -11,6 +11,16 @@ int Road::getId()
 	return id;
 }
 
+void Road::setCurrentFrames(int frames)
+{
+	currentFrames = frames;
+}
+
+int Road::getCurrentFrames()
+{
+	return currentFrames;
+}
+
 void Road::setPosition(Pair pos) {
 	position = pos;
 }
@@ -41,11 +51,9 @@ Car* Road::removeFromTop()
 	return c;
 }
 
-
-
 bool Road::addToEnd(Car* car, bool initial)
 {	
-	int max = initial ? int(MAX_CARS_PER_ROAD*0.66) : MAX_CARS_PER_ROAD;
+	int max = initial ? int(MAX_CARS_PER_ROAD*0.5) : MAX_CARS_PER_ROAD;
 	if (cars.size() < max) {
 		cars.push_back(car);
 		car->setJunction({position.row, position.col});
