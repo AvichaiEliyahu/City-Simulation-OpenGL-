@@ -1,6 +1,7 @@
 #pragma once
 #define TIMES_FILENAME "times.txt"
 #define INFO_FILENAME "info.txt"
+#define STUCK_FILENAME "stuck.txt"
 #define MAX_NUM_OF_FRAMES 10000
 #define CAR_SIZE 3
 #define NUM_OF_DIRECTIONS 4

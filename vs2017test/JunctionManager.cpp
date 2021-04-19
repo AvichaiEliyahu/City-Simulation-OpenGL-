@@ -204,11 +204,32 @@ bool JunctionManager::deadlockCheck() {
 
 }
 
+void JunctionManager::writeRoadsStuckToFile() {
+	FILE* stuckFile = fopen(STUCK_FILENAME, "w");
+	if (!stuckFile) {
+		printf("\nerror opening times file!\n");
+		return;
+	}
+
+	
+	for (int i = 1; i < LENGTH - 1; i++) {
+		for (int j = 1; j < LENGTH - 1; j++) {
+			fprintf(stuckFile, "%d %d %d %d\n",
+				junctions[i][j].getInRoads()[0]->getNumOfStuckCars(),
+				junctions[i][j].getInRoads()[1]->getNumOfStuckCars(),
+				junctions[i][j].getInRoads()[2]->getNumOfStuckCars(),
+				junctions[i][j].getInRoads()[3]->getNumOfStuckCars());
+		}
+	}
+	fclose(stuckFile);
+}
+
 bool JunctionManager::finish()
 {
 	if (carsCounter == 0) {
 		printf("\stuck: %d\n",stuck);
 		writeToFile(stuck);
+		writeRoadsStuckToFile();
 		return true;
 	}
 	return false;
@@ -275,13 +296,14 @@ void JunctionManager::moveAll() {
 						move(&junctions[i][j]);
 						junctions[i][j].getGreenRoad()->setCurrentFrames(junctions[i][j].getGreenRoad()->getCurrentFrames() + FRAME_PER_CAR);
 					}
-					
 				}
 				else
 				{
 					junctions[i][j].getFirstCarInGreenLight()->setColor(RED);
-					if (junctions[i][j].getFirstCarInGreenLight()->changeStuck())
+					if (junctions[i][j].getFirstCarInGreenLight()->changeStuck()) {
 						stuck++;
+						junctions[i][j].getGreenRoad()->increaseNumOfStuckCars();
+					}
 					if (deadlockCheck()) {
 						writeToFile(-1);
 						//Sleep(3000);

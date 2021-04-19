@@ -11,6 +11,16 @@ int Road::getId()
 	return id;
 }
 
+void Road::increaseNumOfStuckCars()
+{
+	numOfStuckCars++;
+}
+
+int Road::getNumOfStuckCars()
+{
+	return numOfStuckCars;
+}
+
 void Road::setCurrentFrames(int frames)
 {
 	currentFrames = frames;

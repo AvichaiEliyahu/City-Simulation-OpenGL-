@@ -24,6 +24,7 @@ public:
 	void initGreens();
 	void carsCheck();
 	void JunctionsCheck();
+	void writeRoadsStuckToFile();
 	void roadsCheck();
 	void generalCheck();
 	bool deadlockCheck();
