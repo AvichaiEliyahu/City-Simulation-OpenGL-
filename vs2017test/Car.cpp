@@ -1,14 +1,6 @@
 #include "Car.h"
 
-void Car::setIsMoving(bool moving)
-{
-	isMoving = moving;
-}
 
-bool Car::getIsMoving()
-{
-	return isMoving;
-}
 void Car::setStuck(bool stuck) {
 	isStuck = stuck;
 }

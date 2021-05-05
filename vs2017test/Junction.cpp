@@ -120,13 +120,6 @@ void Junction::initGreen()
 	switchLights(0);
 }
 
-
-void Junction::moveCarsOnGreen()
-{
-	//move cars
-	inRoads[greenRoad]->MoveFirstCarAnimation();
-}
-
 void Junction::setGreenRoad(int roadNumber) {
 	greenRoad = roadNumber;
 }

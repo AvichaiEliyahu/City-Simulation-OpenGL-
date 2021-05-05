@@ -35,13 +35,10 @@ public:
 	bool addToEnd(Car* car, bool initial);
 	bool addToEndWithoutAnim(Car* car);
 	void refreshCarsPositions();
-	void endAnimation();
-	void MoveFirstCarAnimation();
 	int checkCarsArrival();
 	Car* getFirstCar();
 	bool checkRoadAvailability(Car* car);
 	void setInitialPositions();
-	void moveCars();
 	void drawCars();
 	void drawRoad();
 	void toString();

@@ -4,21 +4,16 @@
 
 class Car {
 private:
-	Point current; // for drawing
+	Point current;
 	Pair junction;
 	int carID;
 	bool exist = false;
 	bool isStuck = false;
-	bool isMoving=false;
-	vector<Pair> path; //every pair marks next junction
+	vector<Pair> path;
 	Pair finalTarget;
 	Color color;
-	//Point nextJunction;
 
 public:
-	void setIsMoving(bool moving);
-	bool getIsMoving();
-
 	void setStuck(bool stuck);
 	bool getStuck();
 	bool changeStuck();
@@ -48,5 +43,4 @@ public:
 	void moveCar(double dx, double dy);
 	void drawCar();
 	void toString();
-	//bool getPassed();
 };

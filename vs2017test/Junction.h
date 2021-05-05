@@ -41,6 +41,5 @@ public:
 	void paintLights();
 	void paintLight(directions d, double r, double g, double b);
 	void initGreen();
-	void moveCarsOnGreen();
 	void drawJunction();
 };

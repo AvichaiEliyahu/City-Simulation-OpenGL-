@@ -22,18 +22,18 @@ public:
 	void putCarsOnRoads();
 	void setInitialPositionOnRoads();
 	void initGreens();
-	void carsCheck();
-	void JunctionsCheck();
 	void writeRoadsStuckToFile();
-	void roadsCheck();
-	void generalCheck();
 	bool deadlockCheck();
 	bool finish();
 	void move(Junction* junction);
 	bool checkIfCarCanLeave(Junction* current);
 	void drawAll();
 	void writeToFile(int frames);
+	void carLeave(int i, int j);
+	void carStuck(int i, int j);
+	void checkAndChangeGreenLight(int i, int j);
 	// a function taht moves on all junctions and checks where the first car in the green light need to leave
 	void moveAll();
+	void framesCheck();
 };
 

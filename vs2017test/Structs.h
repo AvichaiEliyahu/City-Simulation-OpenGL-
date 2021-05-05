@@ -20,7 +20,7 @@
 #define NUM_OF_ROADS NUM_OF_JUNCTIONS * 4
 #define MAX_CARS_PER_ROAD 12
 #define NUM_OF_CARS 150
-#define FRAME_PER_CAR 1000
+#define FRAME_PER_CAR 3000
 //#define NUM_OF_CARS 3
 
 #define WHITE {1,1,1}
@@ -28,6 +28,7 @@
 #define RED {1,0,0}
 #define GREEN {0,1,0}
 #define BLUE {0,0,1}
+#define BUILDING {0.8,0.8,0.8}
 
 #include "vector"
 #include <Windows.h>
